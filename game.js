@@ -16,7 +16,6 @@ class Game{
             player2.addImage(playerImg)
             player2.scale = 0.1
             players=[player1,player2];
-
    }
 
 
@@ -46,30 +45,30 @@ class Game{
              playerScore:score
             });
           }
-        
-          reset(){
-              if(player.y<0 && playerScore<5){
-                  playerScore+=1
-                
-              }
-
-              if(player.isTouching(particles)){
-                
-              }
-          }
-
 
           play(){
               form.hide()
             Player.getPlayerInfo();
          
             if(allPlayers!==undefined){
+                background("black");
                 //var pos = 350
                 var index = 0;
+                var pos = 50;
+
                 for(var plr in allPlayers){
                     
+                    text("Score: " + allPlayers[plr].score, pos,50)
+
+                    if(particlesGroup.isTouching(players[index])){
+                        player.distance = 0;
+                        player.update()
+                    }
+
+                    players[index].y = 350 - allPlayers[plr].distance;
+
                     index = index+1
-                    players[index-1].y = 350 - allPlayers[plr].distance;
+                    pos+=250
                 }
             }
             if(keyIsDown(UP_ARROW) && player.index!==null){
@@ -82,7 +81,10 @@ class Game{
             if(player.distance>350){
                 player.distance = 0;
                 player.score+=1;
+                player.update();
             }
+
+            
           drawSprites(); 
           }
         
